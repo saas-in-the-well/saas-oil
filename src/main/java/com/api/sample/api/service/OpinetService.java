@@ -1,5 +1,6 @@
 package com.api.sample.api.service;
 
+import com.api.sample.api.mapper.OpinetMapper;
 import com.api.sample.api.vo.opinet.request.*;
 import com.api.sample.api.vo.opinet.response.Response;
 import com.api.sample.util.OpinetUtils;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.json.XML;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,9 @@ public class OpinetService {
     private String code;
     private final OpinetUtils opinetUtils;
     private final ObjectMapper objectMapper;
+
+    @Autowired
+    private final OpinetMapper opinetMapper;
 
     /* 공통화 및 최적화 function */
     public Map<String, String> convertToMap(Object object) {
@@ -45,6 +50,17 @@ public class OpinetService {
     /* API Service */
 
     public Response getAreaCode(AreaCode areaCode) throws JsonProcessingException {
+//        log.debug("## API: getAreaCode, Object: {}", areaCode);
+//        areaCode.setCode(code);
+//        Map<String, String> paramMap = convertToMap(areaCode);
+//        StringBuilder stringBuilder = sendGetRequest("/areaCode.do", paramMap);
+//        Response response = getResponse(stringBuilder);
+//
+//        String serializedResponse = objectMapper.writeValueAsString(response);
+//        areaCode.setOut(serializedResponse);
+//        opinetMapper.insertAreaCode(areaCode);
+//        return response;
+
         log.debug("## API: getAreaCode, Object: {}", areaCode);
         areaCode.setCode(code);
         Map<String, String> paramMap = convertToMap(areaCode);

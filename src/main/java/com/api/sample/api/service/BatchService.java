@@ -72,7 +72,7 @@ public class BatchService {
                         .append("기준일시: " + opinetUtils.convertDateTime(oil.getTRADE_DT(), oil.getTRADE_TM())).append(lineSeparator)
                         .append("------------------------------------------");
 
-                slackUtil.send(msg.toString());
+//                slackUtil.send(msg.toString()); # 임시 제거
             }catch (Exception e){
                 log.info("## slack send exception {}", e.getMessage());
             }

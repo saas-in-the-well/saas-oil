@@ -114,7 +114,7 @@ public class OpinetUtils {
         String formattedDate = dateString.substring(0, 4) + "-" + dateString.substring(4, 6) + "-" + dateString.substring(6, 8);
 
         // "TRADE_TM"을 시간 문자열로 변환
-        String tradeString = String.valueOf(tradeTime);
+        String tradeString = String.format("%06d", tradeTime);
         String formattedTime = tradeString.substring(0, 2) + ":" + tradeString.substring(2, 4) + ":" + tradeString.substring(4, 6);
 
         // 날짜와 시간을 합쳐서 LocalDateTime 객체 생성

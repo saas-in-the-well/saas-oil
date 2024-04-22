@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.api.sample.api.mapper.OpinetMapper">
-
+    <insert id="insertAreaCode" parameterType="com.api.sample.api.vo.opinet.request.AreaCode">
+        INSERT INTO tb_oil (code, response, area)
+        VALUES (#{code}, #{out}, #{area})
+    </insert>
 </mapper>

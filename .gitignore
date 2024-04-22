@@ -1,0 +1,14 @@
+.idea/
+.idea/*
+# Compiled class files
+*.class
+
+# Log file
+*.log
+
+# Maven folder
+target/
+
+*.gz
+*.pb
+
