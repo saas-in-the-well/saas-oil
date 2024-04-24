@@ -25,7 +25,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: saas-oil-application-jar
-          path: target/classes/*.jar
+          path: target/*.jar
 
   push-docker-image:
     needs: build
