@@ -63,7 +63,7 @@ jobs:
   
 
   update-deployment:
-    needs: push-docker-image-update
+    needs: push-docker-image
     runs-on: ubuntu-latest
 
     steps:
