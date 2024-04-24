@@ -56,11 +56,6 @@ jobs:
       - name: Push Docker image to DockerHub
         run: docker push ${{ secrets.SEONGJIN_USERNAME }}/${{ secrets.SEONGJIN_DOCKER_REPO }}:tag-${{ github.sha }}
 
-  update-deployment:
-    needs: push-docker-image
-    runs-on: ubuntu-latest
-
-    steps:
       - name: Checkout Kubernetes manifest repository
         uses: actions/checkout@v2
         with:
