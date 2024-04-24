@@ -53,8 +53,8 @@ jobs:
       # 이미지를 Docker 재태그 및 Hub에 푸시
       - name: Push Docker image to DockerHub
         run: |
-          docker tag saas-oil-application:release-dev_hyeongwon-${{ github.sha }} yosigoon/saasfication:saas-oil-application-release-dev_hyeongwon-${{ github.sha }}
-          docker push yosigoon/saasfication:saas-oil-application-release-dev_hyeongwon-${{ github.sha }}
+          docker tag saas-oil-application:release-dev_hyeongwon-${{ github.sha }} yosigoon/saas-oil:saas-oil-application-release-dev_hyeongwon-${{ github.sha }}
+          docker push yosigoon/saas-oil:saas-oil-application-release-dev_hyeongwon-${{ github.sha }}
   
 
   update-deployment:
@@ -72,7 +72,7 @@ jobs:
       # 쿠버네티스 배포이미지 업데이트
       - name: Update Kubernetes Deployment Image
         run: |
-          sed -i 's|yosigoon/saasfication:saas-oil-application|yosigoon/saasfication:saas-oil-application-release-dev_hyeongwon-${{ github.sha }}|' ./kube/hyeongwon/deployment.yaml
+          sed -i 's|yosigoon/saas-oil:saas-oil-application|yosigoon/saas-oil:saas-oil-application-release-dev_hyeongwon-${{ github.sha }}|' ./kube/hyeongwon/deployment.yaml
           git config --global user.name "HW_GithubAction"
           git config --global user.email "yosigoon@gmail.com"
           git add ./kube/hyeongwon/deployment.yaml
