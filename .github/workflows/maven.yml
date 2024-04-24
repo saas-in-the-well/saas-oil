@@ -68,6 +68,11 @@ jobs:
           repository: 'saas-in-the-well/saas-kubernetes'
           ref: 'main'
 
+      # 최신 코드 pull 받기
+      - name: Pull Latest Code
+        run: |
+          git pull origin main
+
       # 쿠버네티스 배포이미지 업데이트
       - name: Update Kubernetes Deployment Image
         run: |
@@ -77,4 +82,4 @@ jobs:
           git config --global user.email "yosigoon@gmail.com"
           git add ./kube/hyeongwon/deployment.yaml
           git commit -m "Update image tag to ${{ github.sha }}"
-          git push
+          git push origin main
