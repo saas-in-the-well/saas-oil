@@ -7,7 +7,7 @@ FROM arm64v8/openjdk:11-jdk-slim@sha256:482a519d80f99a32117003a369c14fdc180c3175
 WORKDIR /app
 
 # 호스트의 JAR 파일을 Docker 이미지로 복사합니다.
-COPY target/classes/saas-oil-application-0.0.1-SNAPSHOT.jar /app/saas-oil-application-0.0.1-SNAPSHOT.jar
+COPY target/saas-oil-application-0.0.1-SNAPSHOT.jar /app/saas-oil-application-0.0.1-SNAPSHOT.jar
 
 # 어플리케이션을 실행합니다.
 CMD ["java", "-jar", "saas-oil-application-0.0.1-SNAPSHOT.jar"]
