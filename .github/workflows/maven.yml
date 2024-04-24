@@ -67,7 +67,6 @@ jobs:
         with:
           repository: 'saas-in-the-well/saas-kubernetes'
           ref: 'main'
-          path: 'kube'
 
       # 쿠버네티스 배포이미지 업데이트
       - name: Update Kubernetes Deployment Image
