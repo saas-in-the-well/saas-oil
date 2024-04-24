@@ -37,7 +37,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: saas-oil-application-jar
-          path: target/classes/
+          path: target/classes
 
       # Docker 이미지 빌드
       - name: Build Docker image
