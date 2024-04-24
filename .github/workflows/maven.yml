@@ -41,7 +41,7 @@ jobs:
 
       # Docker 이미지 빌드
       - name: Build Docker image
-        run: docker build . -t saas-oil-application:release-dev_hyeongwon-${{ github.sha }}
+        run: docker build -t saas-oil-application:release-dev_hyeongwon-${{ github.sha }} .
 
       # Docker Hub에 로그인
       - name: Log in to DockerHub
