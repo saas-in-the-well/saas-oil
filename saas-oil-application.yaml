@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saas-oil-application-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: saas-oil-application
+  template:
+    metadata:
+      labels:
+        app: saas-oil-application
+    spec:
+      containers:
+        - name: saas-oil-application
+          image: lasjiny/saas-oil-application:0.0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081 # 어플리케이션이 노출하는 포트로 변경해야 합니다.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: saas-oil-application-svc
+spec:
+  selector:
+    app: saas-oil-application
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8081
+  type: NodePort
