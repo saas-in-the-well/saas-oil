@@ -145,7 +145,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.api.sample</mainClass>
+                            <mainClass>com.api.sample.SampleApplication</mainClass>
                         </manifest>
                     </archive>
                     <finalName>saas-oil-application-0.0.1-SNAPSHOT</finalName>
