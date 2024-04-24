@@ -71,7 +71,7 @@ jobs:
       # 쿠버네티스 배포이미지 업데이트
       - name: Update Kubernetes Deployment Image
         run: |
-          git pull origin dev_hyeongwon
+          git config pull.ff only
           sed -i 's|yosigoon/saas-oil:saas-oil-application|yosigoon/saas-oil:saas-oil-application-release-dev_hyeongwon-${{ github.sha }}|' ./kube/hyeongwon/deployment.yaml
           git config --global user.name "HW_GithubAction"
           git config --global user.email "yosigoon@gmail.com"
