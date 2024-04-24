@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4">
-  <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$">
-      <excludeFolder url="file://$MODULE_DIR$/filePath_IS_UNDEFINED" />
-      <excludeFolder url="file://$MODULE_DIR$/logs" />
+  <component name="AdditionalModuleElements">
+    <content url="file://$MODULE_DIR$" dumb="true">
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
     </content>
+  </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="90fe3f56-b22e-466d-a013-0a849848d877" />
   </component>
 </module>
