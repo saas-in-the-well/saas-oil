@@ -63,18 +63,17 @@ jobs:
 
     steps:
       - name: Checkout saas-kubernetes repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         with:
           repository: 'saas-in-the-well/saas-kubernetes'
           ref: 'master'
-          # token: ${{ secrets.GITHUB_TOKEN }}
           path: 'saas-kubernetes'
 
       # 쿠버네티스 배포이미지 업데이트
       - name: Update Kubernetes Deployment Image
         run: |
-          git pull origin dev_hyeongwon
           sed -i 's|yosigoon/saasfication:.*|yosigoon/saasfication:saas-oil-application-release-dev_hyeongwon-${{ github.sha }}|' saas-kubernetes/kube/hyeongwon/deployment.yaml
+          cd saas-kubernetes
           git config --global user.name "HW_GithubAction"
           git config --global user.email "yosigoon@gmail.com"
           git add ./kube/hyeongwon/deployment.yaml
