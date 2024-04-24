@@ -66,7 +66,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: 'saas-in-the-well/saas-kubernetes'
-          ref: 'master'
+          ref: 'main'
           path: 'saas-kubernetes'
 
       # 쿠버네티스 배포이미지 업데이트
