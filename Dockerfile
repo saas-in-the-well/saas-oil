@@ -10,4 +10,4 @@ WORKDIR /app
 COPY target/saas-oil-application-0.0.1-SNAPSHOT.jar /app/saas-oil-application-0.0.1-SNAPSHOT.jar
 
 # 어플리케이션을 실행합니다.
-CMD ["java", "-jar", "saas-oil-application-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "-Dspring.profiles.active=stg", "saas-oil-application-0.0.1-SNAPSHOT.jar"]

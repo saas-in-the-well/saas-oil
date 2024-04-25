@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.api.sample</groupId>
-    <artifactId>saas-oil</artifactId>
+    <artifactId>saas-oil-application</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>saas-oil</name>
     <description>Demo project for Spring Boot</description>
@@ -139,13 +139,26 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.5.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.api.sample.api.controller.OpinetController</mainClass>
+                            <mainClass>com.api.sample.SampleApplication</mainClass>
                         </manifest>
                     </archive>
                     <finalName>saas-oil-application-0.0.1-SNAPSHOT</finalName>
