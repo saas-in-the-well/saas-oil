@@ -2,9 +2,9 @@ name: Hyeongwon workflows
 
 on:
   push:
-    branches: [ "dev_hyeongwon" ]
+    branches: [ "develop" ]
   pull_request:
-    branches: [ "dev_hyeongwon" ]
+    branches: [ "develop" ]
 
 jobs:
   build:
@@ -40,7 +40,7 @@ jobs:
 
       # Docker 이미지 빌드
       - name: Build Docker image
-        run: docker build -t saas-oil-application:release-dev_hyeongwon-${{ github.sha }} .
+        run: docker build -t saas-oil-application:release-develop-${{ github.sha }} .
 
       # Docker Hub에 로그인
       - name: Log in to DockerHub
@@ -52,8 +52,8 @@ jobs:
       # 이미지를 Docker 재태그 및 Hub에 푸시
       - name: Push Docker image to DockerHub
         run: |
-          docker tag saas-oil-application:release-dev_hyeongwon-${{ github.sha }} yosigoon/saas-oil:saas-oil-application-release-dev_hyeongwon-${{ github.sha }}
-          docker push yosigoon/saas-oil:saas-oil-application-release-dev_hyeongwon-${{ github.sha }}
+          docker tag saas-oil-application:release-develop-${{ github.sha }} yosigoon/saas-oil:saas-oil-application-release-develop-${{ github.sha }}
+          docker push yosigoon/saas-oil:saas-oil-application-release-develop-${{ github.sha }}
   
 
   update-deployment:
@@ -66,19 +66,19 @@ jobs:
         with:
           token: ${{ secrets.HYEONGWON_GITHUB_TOKEN }}
           repository: 'saas-in-the-well/saas-kubernetes'
-          ref: 'dev_hyeongwon'
+          ref: 'develop'
 
       # 최신 코드 pull 받기
       - name: Pull Latest Code
         run: |
-          git pull origin dev_hyeongwon
+          git pull origin develop
 
       # 쿠버네티스 배포이미지 업데이트
       - name: Update Kubernetes Deployment Image
         run: |
-          sed -i 's|yosigoon/saas-oil:.*|yosigoon/saas-oil:saas-oil-application-release-dev_hyeongwon-${{ github.sha }}|' ./kube/saas-oil-deployment.yaml
+          sed -i 's|yosigoon/saas-oil:.*|yosigoon/saas-oil:saas-oil-application-release-develop-${{ github.sha }}|' ./kube/saas-oil-deployment.yaml
           git config --global user.name "HW_GithubAction"
           git config --global user.email "yosigoon@gmail.com"
           git add ./kube/saas-oil-deployment.yaml
           git commit -m "Update image tag to ${{ github.sha }}"
-          git push origin dev_hyeongwon
+          git push origin develop
