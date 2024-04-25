@@ -44,7 +44,7 @@ jobs:
 
       # Docker 이미지 빌드
       - name: Build Docker image
-        run: docker build -t ${{ env.APP_NAME }}-application:release-${{ env.BRANCH_NAME }}-${{ github.sha }} .
+        run: docker build . -t ${{ secrets.JAEHO_DOCKER_NAME }}/${{ env.APP_NAME }}:release-${{ env.BRANCH_NAME }}-${{ github.sha }} --build-arg VERSION=${{ github.sha }}
 
       # Docker Hub에 로그인
       - name: Log in to DockerHub
