@@ -1,4 +1,4 @@
-name: Hyeongwon workflows
+name: develop workflows
 
 on:
   push:
