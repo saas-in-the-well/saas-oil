@@ -1,6 +1,6 @@
 # application.yml엔 공통으로 적용할 설정을 적는다.
 server:
-  port: 8000
+  port: 9000
   servlet:
     context-path: /
     encoding:
@@ -31,3 +31,14 @@ mybatis:
 #logging:
   #file:
     #path: /home/logs
+
+management:
+  server:
+    port: 9000
+  endpoints:
+    prometheus:
+      enabled: true
+      endpoint: http://prometheus-service.saas.svc.cluster.local
+    web:
+      exposure:
+        include: "*"
