@@ -42,3 +42,11 @@ management:
     web:
       exposure:
         include: "*"
+
+opentelemetry:
+  service:
+    name: saas-oil
+  exporter:
+    otlp:
+      endpoint: http://mimir-service.saas:80
+      protocol: http
