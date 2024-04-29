@@ -38,7 +38,7 @@ management:
   endpoints:
     prometheus:
       enabled: true
-      endpoint: http://prometheus-service.saas:80
+      endpoint: http://prometheus-service.saas.svc.cluster.local
     web:
       exposure:
         include: "*"
@@ -48,5 +48,5 @@ opentelemetry:
     name: saas-oil
   exporter:
     otlp:
-      endpoint: http://mimir-service.saas:80
+      endpoint: http://mimir-service.saas:svc.cluster.local
       protocol: http
