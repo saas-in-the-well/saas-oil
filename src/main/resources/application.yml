@@ -44,9 +44,7 @@ management:
         include: "*"
 
 opentelemetry:
-  service:
-    name: saas-oil
   exporter:
     otlp:
-      endpoint: http://mimir-service.saas:svc.cluster.local
+      endpoint: http://mimir-service.saas.svc.cluster.local
       protocol: http
