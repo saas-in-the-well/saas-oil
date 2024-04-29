@@ -38,7 +38,7 @@ management:
   endpoints:
     prometheus:
       enabled: true
-      endpoint: http://prometheus-service.saas.svc.cluster.local
+      endpoint: http://prometheus-service.saas:80
     web:
       exposure:
         include: "*"
