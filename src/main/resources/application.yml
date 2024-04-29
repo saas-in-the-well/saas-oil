@@ -42,9 +42,3 @@ management:
     web:
       exposure:
         include: "*"
-
-opentelemetry:
-  exporter:
-    otlp:
-      endpoint: http://mimir-service.saas.svc.cluster.local
-      protocol: http
