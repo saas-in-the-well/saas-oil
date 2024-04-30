@@ -31,6 +31,9 @@ jobs:
           name: saas-oil-application-jar
           path: target/*.jar
 
+      - name: List files in the working directory - 1
+        run: ls target/
+
   docker:
     needs: build
     runs-on: ubuntu-latest
