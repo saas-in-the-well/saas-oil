@@ -40,34 +40,54 @@ jobs:
           name: saas-oil-application-jar
           path: target/
 
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::794187215716:role/devops_saas_github_oidc
+          role-session-name: ecrRoleSession
+          aws-region: ap-northeast-2
+
+#      # Docker 이미지 빌드
+#      - name: Build Docker image
+#        run: docker build . -t ${{ secrets.SEONGJIN_USERNAME }}/${{ secrets.SEONGJIN_DOCKER_REPO }}:tag-${{ github.sha }}
+
+
+#      # Docker Hub에 로그인
+#      - name: Log in to DockerHub
+#        uses: docker/login-action@v3
+#        with:
+#          username: ${{ secrets.SEONGJIN_USERNAME }}
+#          password: ${{ secrets.SEONGJIN_DOCKER_PASSWORD }}
+
+      # AWS ECR에 로그인
+      - name: Login to Amazon ECR
+        run: |
+          aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 794187215716.dkr.ecr.ap-northeast-2.amazonaws.com
+
       # Docker 이미지 빌드
       - name: Build Docker image
-        run: docker build . -t ${{ secrets.SEONGJIN_USERNAME }}/${{ secrets.SEONGJIN_DOCKER_REPO }}:tag-${{ github.sha }}
+        run: docker build . -t 794187215716.dkr.ecr.ap-northeast-2.amazonaws.com/${{ secrets.SEONGJIN_DOCKER_REPO }}:tag-${{ github.sha }}
 
-
-      # Docker Hub에 로그인
-      - name: Log in to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.SEONGJIN_USERNAME }}
-          password: ${{ secrets.SEONGJIN_DOCKER_PASSWORD }}
+      # 이미지를 ECR에 푸시
+      - name: Push Docker image to AWS ECR
+        run: docker push 794187215716.dkr.ecr.ap-northeast-2.amazonaws.com/${{ secrets.SEONGJIN_DOCKER_REPO }}:tag-${{ github.sha }}
 
       # 이미지를 Docker 재태그 및 Hub에 푸시
       - name: Push Docker image to DockerHub
         run: docker push ${{ secrets.SEONGJIN_USERNAME }}/${{ secrets.SEONGJIN_DOCKER_REPO }}:tag-${{ github.sha }}
 
-      - name: Checkout Kubernetes manifest repository
-        uses: actions/checkout@v2
-        with:
-          repository: ${{ secrets.SEONGJIN_MANIFEST_REPO }}
-          token: ${{ secrets.SEONGJIN_MANIFEST_REPO_TOKEN }}
-          ref: ${{ secrets.SEONGJIN_K8S_BRANCH }}
-
-      - name: Update k8s oil file
-        run: |
-          sed -i 's|^.*image:.*|          image: ${{ secrets.SEONGJIN_USERNAME }}/${{ secrets.SEONGJIN_DOCKER_REPO }}:tag-${{ github.sha }}|' kube/saas-oil-application.yaml
-          git config user.name ${{ secrets.SEONGJIN_USERNAME }}
-          git config user.email ${{ secrets.SEONGJIN_EMAIL }}
-          git add kube/saas-oil-application.yaml
-          git commit -m "Update ${{ secrets.SEONGJIN_DOCKER_REPO }} image tag to ${{ github.sha }}"
-          git push
+#      - name: Checkout Kubernetes manifest repository
+#        uses: actions/checkout@v2
+#        with:
+#          repository: ${{ secrets.SEONGJIN_MANIFEST_REPO }}
+#          token: ${{ secrets.SEONGJIN_MANIFEST_REPO_TOKEN }}
+#          ref: ${{ secrets.SEONGJIN_K8S_BRANCH }}
+#
+#      - name: Update k8s oil file
+#        run: |
+#          sed -i 's|^.*image:.*|          image: ${{ secrets.SEONGJIN_USERNAME }}/${{ secrets.SEONGJIN_DOCKER_REPO }}:tag-${{ github.sha }}|' kube/saas-oil-application.yaml
+#          git config user.name ${{ secrets.SEONGJIN_USERNAME }}
+#          git config user.email ${{ secrets.SEONGJIN_EMAIL }}
+#          git add kube/saas-oil-application.yaml
+#          git commit -m "Update ${{ secrets.SEONGJIN_DOCKER_REPO }} image tag to ${{ github.sha }}"
+#          git push
