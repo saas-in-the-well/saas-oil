@@ -6,6 +6,6 @@ FROM arm64v8/openjdk:8-jdk-slim
 # 작업 디렉토리를 설정합니다.
 WORKDIR /app
 # 호스트의 JAR 파일을 Docker 이미지로 복사합니다.
-COPY target/sample-0.0.1-SNAPSHOT.jar /app/sample-0.0.1-SNAPSHOT.jar
+COPY target/saas-oil-0.0.1-SNAPSHOT.jar /app/saas-oil-0.0.1-SNAPSHOT.jar
 # 어플리케이션을 실행합니다.
-CMD ["java", "-Dspring.profiles.active=stg", "-jar", "sample-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-Dspring.profiles.active=stg", "-jar", "saas-oil-0.0.1-SNAPSHOT.jar"]
