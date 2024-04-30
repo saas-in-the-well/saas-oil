@@ -68,6 +68,9 @@ jobs:
         run: |
           aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 794187215716.dkr.ecr.ap-northeast-2.amazonaws.com
 
+      - name: List files in the working directory
+        run: ls -la
+
       # Docker 이미지 빌드
       - name: Build Docker image
         run: docker build . -t 794187215716.dkr.ecr.ap-northeast-2.amazonaws.com/${{ secrets.SEONGJIN_DOCKER_REPO }}:tag-${{ github.sha }}
@@ -76,9 +79,10 @@ jobs:
       - name: Push Docker image to AWS ECR
         run: docker push 794187215716.dkr.ecr.ap-northeast-2.amazonaws.com/${{ secrets.SEONGJIN_DOCKER_REPO }}:tag-${{ github.sha }}
 
-      # 이미지를 Docker 재태그 및 Hub에 푸시
-      - name: Push Docker image to DockerHub
-        run: docker push ${{ secrets.SEONGJIN_USERNAME }}/${{ secrets.SEONGJIN_DOCKER_REPO }}:tag-${{ github.sha }}
+#      # 이미지를 Docker 재태그 및 Hub에 푸시
+#      - name: Push Docker image to DockerHub
+#        run: docker push ${{ secrets.SEONGJIN_USERNAME }}/${{ secrets.SEONGJIN_DOCKER_REPO }}:tag-${{ github.sha }}
+
 
 #      - name: Checkout Kubernetes manifest repository
 #        uses: actions/checkout@v2
