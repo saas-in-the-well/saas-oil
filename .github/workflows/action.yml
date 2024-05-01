@@ -58,6 +58,10 @@ jobs:
           role-session-name: ecrRoleSession
           aws-region: ${{ env.aws_region }}
 
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
       # Docker 이미지 빌드
       - name: Build Docker image
         run: docker build . -t ${{ env.ecr_url }}:tag-${{ github.sha }}
