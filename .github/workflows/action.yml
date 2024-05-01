@@ -9,6 +9,11 @@ on:
 permissions:
   id-token: write   # This is required for requesting the JWT
 
+env:
+  ecr_url: 794187215716.dkr.ecr.ap-northeast-2.amazonaws.com/saas-oil
+  role_arn: arn:aws:iam::794187215716:role/saas-git-action
+  aws_region: ap-northeast-2
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -49,14 +54,14 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: arn:aws:iam::794187215716:role/saas-git-action
+          role-to-assume: ${{ env.role_arn }}
           role-session-name: ecrRoleSession
-          aws-region: ap-northeast-2
+          aws-region: ${{ env.aws_region }}
 
       # Docker 이미지 빌드
       - name: Build Docker image
-        run: docker build . -t 794187215716.dkr.ecr.ap-northeast-2.amazonaws.com/${{ secrets.SEONGJIN_DOCKER_REPO }}:tag-${{ github.sha }}
+        run: docker build . -t ${{ env.ecr_url }}:tag-${{ github.sha }}
 
       # 이미지를 ECR에 푸시
       - name: Push Docker image to AWS ECR
-        run: docker push 794187215716.dkr.ecr.ap-northeast-2.amazonaws.com/${{ secrets.SEONGJIN_DOCKER_REPO }}:tag-${{ github.sha }}
+        run: docker push ${{ env.ecr_url }}:tag-${{ github.sha }}
