@@ -69,6 +69,12 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
+      - name: Get ECR Repository URL
+        id: get-ecr-url
+        run: |
+          ECR_URL=$(aws ecr describe-repositories --repository-names ${{ env.APP_NAME }} --query 'repositories[0].repositoryUri' --output text)
+          echo "ECR_URL=$ECR_URL" >> $GITHUB_ENV
+
       # Docker 이미지 빌드
       - name: Build Docker image
         run: docker build . -t ${{ env.img_name_tag }}
