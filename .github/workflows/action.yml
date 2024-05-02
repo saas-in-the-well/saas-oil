@@ -19,6 +19,7 @@ env:
   SAAS_GITHUB_TOKEN: ${{ secrets.SAAS_GITHUB_TOKEN }}
   SAAS_GITHUB_EMAIL: ${{ vars.SAAS_GITHUB_EMAIL }}
   SAAS_GITHUB_NAME: ${{ vars.SAAS_GITHUB_NAME }}
+  BRANCH_NAME: dev_anseongjin
 
 jobs:
   build:
@@ -74,8 +75,7 @@ jobs:
         id: get-ecr-url
         run: |
           ECR_URL=$(aws ecr describe-repositories --repository-names ${{ env.APP_NAME }} --query 'repositories[0].repositoryUri' --output text)
-          ECR_URL_TAG="$ECR_URL:tag-${{ github.sha }}"
-          echo "ECR_URL_TAG=$ECR_URL_TAG" >> $GITHUB_ENV
+          echo "ECR_URL=$ECR_URL" >> $GITHUB_ENV
 
       # Docker 이미지 빌드
       - name: Build Docker image
@@ -99,7 +99,7 @@ jobs:
 
       - name: Update k8s oil file
         run: |
-          sed -i 's|^.*image:.*|          image: ${{ env.ECR_URL_TAG }}|' kube/saas-oil-application.yaml
+          sed -i 's|${{ env.APP_NAME }}:.*|${{ env.APP_NAME }}:${{ env.BRANCH_NAME }}-${{ github.sha }}|' kube/saas-oil-application.yaml
           git config user.name ${{ env.SAAS_GITHUB_EMAIL }}
           git config user.email ${{ env.SAAS_GITHUB_NAME }}
           git add kube/saas-oil-application.yaml
