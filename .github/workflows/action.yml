@@ -73,13 +73,11 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      # Docker 이미지 빌드
-      - name: Build Docker image
-        run: docker build . -t ${{ env.IMG_NAME_TAG }}
-
-      # 이미지를 ECR에 푸시
-      - name: Push Docker image to AWS ECR
-        run: docker push ${{ env.IMG_NAME_TAG }}
+      # Docker 이미지 빌드 & ECR에 푸시
+      - name: Build Docker image And Push to AWS ECR
+        run: |
+          docker build . -t ${{ env.IMG_NAME_TAG }}
+          docker push ${{ env.IMG_NAME_TAG }}
 
   update-deployment:
     needs: docker
@@ -95,7 +93,7 @@ jobs:
 
       - name: Update k8s oil file
         run: |
-          sed -i 's|${{ env.AWS_ECR_URL }}:.*|${{ env.IMG_NAME_TAG }}|' kube/saas-oil-application.yaml
+          sed -i 's|${{ env.AWS_ECR_URL }}/.*|${{ env.IMG_NAME_TAG }}|' kube/saas-oil-application.yaml
           git config user.name ${{ env.SAAS_GITHUB_EMAIL }}
           git config user.email ${{ env.SAAS_GITHUB_NAME }}
           git add kube/saas-oil-application.yaml
