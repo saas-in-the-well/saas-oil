@@ -79,11 +79,11 @@ jobs:
 
       # Docker 이미지 빌드
       - name: Build Docker image
-        run: docker build . -t ${{ env.img_name_tag }}
+        run: docker build . -t ${{ env.ECR_URL_TAG }}
 
       # 이미지를 ECR에 푸시
       - name: Push Docker image to AWS ECR
-        run: docker push ${{ env.img_name_tag }}
+        run: docker push ${{ env.ECR_URL_TAG }}
 
   update-deployment:
     needs: docker
