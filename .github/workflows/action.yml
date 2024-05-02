@@ -10,6 +10,7 @@ permissions:
   id-token: write   # This is required for requesting the JWT
 
 env:
+  APP_NAME: saas-oil
   ecr_url: 794187215716.dkr.ecr.ap-northeast-2.amazonaws.com/saas-oil
   role_arn: ${{secrets.AWS_OIDC_ROLE}}
   aws_region: ${{secrets.AWS_REGION}}
