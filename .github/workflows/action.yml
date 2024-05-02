@@ -74,7 +74,7 @@ jobs:
         run: docker push ${{ env.img_name_tag }}
 
   update-deployment:
-    needs: push-docker-image
+    needs: docker
     runs-on: ubuntu-latest
 
     steps:
