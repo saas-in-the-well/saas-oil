@@ -11,8 +11,9 @@ permissions:
 
 env:
   ecr_url: 794187215716.dkr.ecr.ap-northeast-2.amazonaws.com/saas-oil
-  role_arn: arn:aws:iam::794187215716:role/saas-git-action
-  aws_region: ap-northeast-2
+  role_arn: ${{secrets.AWS_OIDC_ROLE}}
+  aws_region: ${{secrets.AWS_REGION}}
+  img_name_tag: 794187215716.dkr.ecr.ap-northeast-2.amazonaws.com/saas-oil:tag-${{ github.sha }}
 
 jobs:
   build:
@@ -51,6 +52,7 @@ jobs:
           name: saas-oil-application-jar
           path: target/
 
+      # OIDC 인증
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
@@ -58,14 +60,36 @@ jobs:
           role-session-name: ecrRoleSession
           aws-region: ${{ env.aws_region }}
 
+      # ECR 로그인
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
       # Docker 이미지 빌드
       - name: Build Docker image
-        run: docker build . -t ${{ env.ecr_url }}:tag-${{ github.sha }}
+        run: docker build . -t ${{ env.img_name_tag }}
 
       # 이미지를 ECR에 푸시
       - name: Push Docker image to AWS ECR
-        run: docker push ${{ env.ecr_url }}:tag-${{ github.sha }}
+        run: docker push ${{ env.img_name_tag }}
+
+  update-deployment:
+    needs: push-docker-image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Kubernetes manifest repository
+        uses: actions/checkout@v2
+        with:
+          repository: https://github.com/saas-in-the-well/saas-kubernetes.git
+          token: ${{ secrets.TOKEN_GITHUB }}
+          ref: dev_anseongjin
+
+      - name: Update k8s oil file
+        run: |
+          sed -i 's|^.*image:.*|          image: ${{ env.img_name_tag }}|' kube/saas-oil-application.yaml
+          git config user.name ${{ secrets.SAAS_GITHUB_EMAIL }}
+          git config user.email ${{ secrets.SAAS_GITHUB_NAME }}
+          git add kube/saas-oil-application.yaml
+          git commit -m "Update image tag to ${{ github.sha }}"
+          git push
