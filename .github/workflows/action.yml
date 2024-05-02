@@ -21,7 +21,7 @@ env:
   SAAS_GITHUB_EMAIL: ${{ vars.SAAS_GITHUB_EMAIL }}
   SAAS_GITHUB_NAME: ${{ vars.SAAS_GITHUB_NAME }}
   AWS_ECR_URL: ${{ secrets.AWS_ECR_URL }}
-  IMG_NAME_TAG: "${{ secrets.AWS_ECR_URL }}/${{ env.APP_NAME }}:${{ env.BRANCH_NAME }}-${{ github.sha }}"
+  IMG_NAME_TAG: "${{ secrets.AWS_ECR_URL }}/${{ APP_NAME }}:${{ BRANCH_NAME }}-${{ github.sha }}"
 
 jobs:
   build:
