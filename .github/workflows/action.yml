@@ -88,8 +88,8 @@ jobs:
       - name: Update k8s oil file
         run: |
           sed -i 's|^.*image:.*|          image: ${{ env.img_name_tag }}|' kube/saas-oil-application.yaml
-          git config user.name ${{ secrets.SAAS_GITHUB_EMAIL }}
-          git config user.email ${{ secrets.SAAS_GITHUB_NAME }}
+          git config user.name ${{ vars.SAAS_GITHUB_EMAIL }}
+          git config user.email ${{ vars.SAAS_GITHUB_NAME }}
           git add kube/saas-oil-application.yaml
           git commit -m "Update image tag to ${{ github.sha }}"
           git push
