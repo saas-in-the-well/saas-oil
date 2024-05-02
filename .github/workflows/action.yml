@@ -11,6 +11,7 @@ permissions:
 
 env:
   APP_NAME: saas-oil
+  BRANCH_NAME: dev_anseongjin
 #  ecr_url: 794187215716.dkr.ecr.ap-northeast-2.amazonaws.com/saas-oil
   role_arn: ${{secrets.AWS_OIDC_ROLE}}
   aws_region: ${{secrets.AWS_REGION}}
@@ -19,7 +20,8 @@ env:
   SAAS_GITHUB_TOKEN: ${{ secrets.SAAS_GITHUB_TOKEN }}
   SAAS_GITHUB_EMAIL: ${{ vars.SAAS_GITHUB_EMAIL }}
   SAAS_GITHUB_NAME: ${{ vars.SAAS_GITHUB_NAME }}
-  BRANCH_NAME: dev_anseongjin
+  AWS_ECR_URL: ${{ secrets.AWS_ECR_URL }}
+  IMG_NAME_TAG: "${{ secrets.AWS_ECR_URL }}/${{ env.APP_NAME }}:${{ env.BRANCH_NAME }}-${{ github.sha }}"
 
 jobs:
   build:
@@ -71,19 +73,13 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Get ECR Repository URL
-        id: get-ecr-url
-        run: |
-          ECR_URL=$(aws ecr describe-repositories --repository-names ${{ env.APP_NAME }} --query 'repositories[0].repositoryUri' --output text)
-          echo "ECR_URL=$ECR_URL" >> $GITHUB_ENV
-
       # Docker 이미지 빌드
       - name: Build Docker image
-        run: docker build . -t ${{ env.ECR_URL_TAG }}
+        run: docker build . -t ${{ env.IMG_NAME_TAG }}
 
       # 이미지를 ECR에 푸시
       - name: Push Docker image to AWS ECR
-        run: docker push ${{ env.ECR_URL_TAG }}
+        run: docker push ${{ env.IMG_NAME_TAG }}
 
   update-deployment:
     needs: docker
@@ -99,7 +95,7 @@ jobs:
 
       - name: Update k8s oil file
         run: |
-          sed -i 's|${{ env.APP_NAME }}:.*|${{ env.APP_NAME }}:${{ env.BRANCH_NAME }}-${{ github.sha }}|' kube/saas-oil-application.yaml
+          sed -i 's|${{ env.APP_NAME }}:.*|${{ env.IMG_NAME_TAG }}|' kube/saas-oil-application.yaml
           git config user.name ${{ env.SAAS_GITHUB_EMAIL }}
           git config user.email ${{ env.SAAS_GITHUB_NAME }}
           git add kube/saas-oil-application.yaml
