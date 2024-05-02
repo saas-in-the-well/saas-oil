@@ -13,7 +13,7 @@ env:
   ecr_url: 794187215716.dkr.ecr.ap-northeast-2.amazonaws.com/saas-oil
   role_arn: ${{secrets.AWS_OIDC_ROLE}}
   aws_region: ${{secrets.AWS_REGION}}
-  img_name_tag: ${{ env.ecr_url }}:tag-${{ github.sha }}
+  img_name_tag: 794187215716.dkr.ecr.ap-northeast-2.amazonaws.com/saas-oil:tag-${{ github.sha }}
   SAAS_KUBE_REPOSITORY: ${{ vars.SAAS_KUBE_REPOSITORY }}
   SAAS_GITHUB_TOKEN: ${{ SAAS_GITHUB_TOKEN }}
   SAAS_GITHUB_EMAIL: ${{ vars.SAAS_GITHUB_EMAIL }}
