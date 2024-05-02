@@ -12,6 +12,8 @@ permissions:
 env:
   APP_NAME: saas-oil
   BRANCH_NAME: dev_anseongjin
+  IMG_NAME_TAG: "${{ secrets.AWS_ECR_URL }}/saas-oil:dev_anseongjin-${{ github.sha }}"
+  AWS_ECR_URL: ${{ secrets.AWS_ECR_URL }}
 #  ecr_url: 794187215716.dkr.ecr.ap-northeast-2.amazonaws.com/saas-oil
   role_arn: ${{secrets.AWS_OIDC_ROLE}}
   aws_region: ${{secrets.AWS_REGION}}
@@ -20,8 +22,6 @@ env:
   SAAS_GITHUB_TOKEN: ${{ secrets.SAAS_GITHUB_TOKEN }}
   SAAS_GITHUB_EMAIL: ${{ vars.SAAS_GITHUB_EMAIL }}
   SAAS_GITHUB_NAME: ${{ vars.SAAS_GITHUB_NAME }}
-  AWS_ECR_URL: ${{ secrets.AWS_ECR_URL }}
-  IMG_NAME_TAG: "${{ secrets.AWS_ECR_URL }}/${{ APP_NAME }}:${{ BRANCH_NAME }}-${{ github.sha }}"
 
 jobs:
   build:
@@ -91,7 +91,7 @@ jobs:
         with:
           repository: ${{ env.SAAS_KUBE_REPOSITORY }}
           token: ${{ env.SAAS_GITHUB_TOKEN }}
-          ref: dev_anseongjin
+          ref: ${{ env.BRANCH_NAME }}
 
       - name: Update k8s oil file
         run: |
