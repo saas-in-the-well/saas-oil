@@ -95,7 +95,7 @@ jobs:
 
       - name: Update k8s oil file
         run: |
-          sed -i 's|${{ env.APP_NAME }}:.*|${{ env.IMG_NAME_TAG }}|' kube/saas-oil-application.yaml
+          sed -i 's|${{ env.AWS_ECR_URL }}:.*|${{ env.IMG_NAME_TAG }}|' kube/saas-oil-application.yaml
           git config user.name ${{ env.SAAS_GITHUB_EMAIL }}
           git config user.email ${{ env.SAAS_GITHUB_NAME }}
           git add kube/saas-oil-application.yaml
