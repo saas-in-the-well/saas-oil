@@ -81,7 +81,7 @@ jobs:
       - name: Checkout Kubernetes manifest repository
         uses: actions/checkout@v2
         with:
-          repository: https://github.com/saas-in-the-well/saas-kubernetes.git
+          repository: saas-in-the-well/saas-kubernetes.git
           token: ${{ secrets.TOKEN_GITHUB }}
           ref: dev_anseongjin
 
