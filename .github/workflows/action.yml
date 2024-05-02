@@ -82,7 +82,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: saas-in-the-well/saas-kubernetes.git
-          token: ${{ secrets.TOKEN_GITHUB }}
+          token: ${{ secrets.SAAS_GITHUB_TOKEN }}
           ref: dev_anseongjin
 
       - name: Update k8s oil file
