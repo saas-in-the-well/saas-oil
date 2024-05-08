@@ -1,7 +1,7 @@
 # 베이스 이미지를 지정합니다.
 # 이미지가 로컬에 존재하지 않을 경우에만 다운로드하도록 합니다.
 # 이미지가 로컬에 있을 경우에는 다시 다운로드하지 않습니다.
-FROM arm64v8/openjdk:11-jdk-slim@sha256:482a519d80f99a32117003a369c14fdc180c3175ca3ee8b2bf659b9de05cf53b
+FROM openjdk:11-jdk-slim
 
 # 작업 디렉토리를 설정합니다.
 WORKDIR /app
