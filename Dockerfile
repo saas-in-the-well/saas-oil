@@ -1,7 +1,7 @@
 # 베이스 이미지를 지정합니다.
 # 이미지가 로컬에 존재하지 않을 경우에만 다운로드하도록 합니다.
 # 이미지가 로컬에 있을 경우에는 다시 다운로드하지 않습니다.
-FROM --platform=linux/amd64 openjdk:11-jdk
+FROM openjdk:11-jdk
 
 # 작업 디렉토리를 설정합니다.
 WORKDIR /app

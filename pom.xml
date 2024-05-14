@@ -134,6 +134,13 @@
             <version>20230227</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/ca.pjer/logback-awslogs-appender -->
+        <dependency>
+            <groupId>ca.pjer</groupId>
+            <artifactId>logback-awslogs-appender</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
