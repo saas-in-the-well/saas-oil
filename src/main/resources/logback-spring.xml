@@ -109,6 +109,7 @@
         <level value="INFO"/>
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="LOG_FILE"/>
+        <appender-ref ref="ASYNC_AWS_LOGS"/>
     </logger>
 
     <logger name="jdbc" level="OFF"/>
@@ -122,6 +123,7 @@
     <root level="INFO">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="LOG_FILE"/>
+        <appender-ref ref="ASYNC_AWS_LOGS"/>
     </root>
 
 </configuration>
