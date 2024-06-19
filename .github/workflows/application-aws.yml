@@ -90,9 +90,9 @@ jobs:
 
       - name: Update k8s oil file
         run: |
-          sed -i 's|${{ secrets.AWS_ECR_URL }}/.*|${{ secrets.AWS_ECR_URL }}/${{ env.APP_NAME }}:${{ env.BRANCH_NAME }}-${{ github.sha }}|' kube/${{env.BRANCH_NAME}}/${{env.APP_NAME}}.yaml
+          sed -i 's|${{ secrets.AWS_ECR_URL }}/.*|${{ secrets.AWS_ECR_URL }}/${{ env.APP_NAME }}:${{ env.BRANCH_NAME }}-${{ github.sha }}|' kube/saas/application-plain/${{env.APP_NAME}}.yaml
           git config user.name ${{ vars.SAAS_GITHUB_EMAIL }}
           git config user.email ${{ vars.SAAS_GITHUB_NAME }}
-          git add kube/${{env.BRANCH_NAME}}/${{env.APP_NAME}}.yaml
+          git add kube/saas/application-plain/${{env.APP_NAME}}.yaml
           git commit -m "Update image tag to ${{ github.sha }}"
           git push
